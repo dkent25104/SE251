@@ -1,0 +1,296 @@
+<!DOCTYPE html><!--Dan Kent SE251 8-21-2018-->
+<html>
+<head>
+<title>Practical</title>
+<style type="text/css">
+	section{
+		
+		margin-bottom:25px;
+	}
+	
+	section section{
+		width:100%;
+		float:left;
+		border:1px solid black;
+	}
+	#main-content section{
+		width:33%;
+		float:left;
+	}
+	
+	#main-content{
+	margin-bottom:25px;
+	}
+	.search{
+		width:45%;
+		float:left;
+		padding:25px;
+	}
+</style>
+</head>
+<body>
+<div id="main-content">
+<section id="database-analyst-area" >
+<h2>Database Analyst</h2>
+	<h3>First Name:</h3>
+	<div class="first"></div>
+	<h3>Last Name:</h3>
+	<div class="last"></div>
+	<h3>Highest Paid Salary</h3>
+	<div class="highest"></div>
+	<h3>Highest Average Paid Salary</h3>
+	<div class="average"></div>
+</section >
+
+<section  id="web-developer-area" >
+<h2>Web Developer</h2>
+	<h3>First Name:</h3>
+	<div class="first"></div>
+	<h3>Last Name:</h3>
+	<div class="last"></div>
+	<h3>Highest Paid Salary</h3>
+	<div class="highest"></div>
+	<h3>Highest Average Paid Salary</h3>
+	<div class="average"></div>
+</section >
+
+<section  id="software-engineer-area">
+<h2>Software Engineer</h2>
+	<h3>First Name:</h3>
+	<div class="first"></div>
+	<h3>Last Name:</h3>
+	<div class="last"></div>
+	<h3>Highest Paid Salary</h3>
+	<div class="highest"></div>
+	<h3>Highest Average Paid Salary</h3>
+	<div class="average"></div>
+</section >
+</div>
+<section  id="search-area" class="search">
+	<input type="text" placeholder="First Name" id="first-name">
+	<input type="text" placeholder="Last Name" id="last-name">
+	<input type="button" id="search-submit" value="Search">
+	<input type="button" id="search-clear" value="Clear">
+	<section id="search-output">
+	<h2>Search Output</h2>
+	<div class="output">
+		<!--Output search info to here.-->
+	</div>
+	</section>
+</section >
+
+<section  id="list-area" class="search">
+	<input type="button" value="List Database Analysts" id="list-database-analyst">
+	<input type="button" value="List Web Developers" id="list-web-developer">
+	<input type="button" value="List Software Engineers" id="list-software-engineer" >
+	<input type="button" id="list-clear" value="Clear">
+	<section id="list-output">
+	<h2>List Output</h2>
+		<div class="output">
+			<!--Output list info to here.-->
+		</div>
+	</section>
+</section >
+
+<script type="text/javascript">
+	var inLocal = false;
+	var DAdivs = document.querySelectorAll("#database-analyst-area div");
+	var WDdivs = document.querySelectorAll("#web-developer-area div");
+	var SEdivs = document.querySelectorAll("#software-engineer-area div");
+	window.addEventListener('load', init);
+	function init(e)
+	{
+		if (localStorage.getItem("DAfirst") !== null)
+		{
+			inLocal = true;
+
+			DAdivs[0].innerHTML = localStorage.getItem("DAfirst");
+			DAdivs[1].innerHTML = localStorage.getItem("DAlast");
+			DAdivs[2].innerHTML = localStorage.getItem("DAsalary");
+			WDdivs[0].innerHTML = localStorage.getItem("WDfirst");
+			WDdivs[1].innerHTML = localStorage.getItem("WDlast");
+			WDdivs[2].innerHTML = localStorage.getItem("WDsalary");
+			SEdivs[0].innerHTML = localStorage.getItem("SEfirst");
+			SEdivs[1].innerHTML = localStorage.getItem("SElast");
+			SEdivs[2].innerHTML = localStorage.getItem("SEsalary");
+		}
+	}
+	
+	var salariesList = "http://ict.neit.edu/evanrense/salaries.php";
+	fetch(salariesList)
+	.then(function(data){return data.json();})
+	.then(function(data)
+	{
+		var DAh3 = document.querySelectorAll("#database-analyst-area h3");
+		var WDh3 = document.querySelectorAll("#web-developer-area h3");
+		var SEh3 = document.querySelectorAll("#software-engineer-area h3");
+
+		var DAlist = new Array;
+		var WDlist = new Array;
+		var SElist = new Array;
+		var DAhighest = 0, DAfirst, DAlast, DAavg = 0, DAcount = 0;
+		var WDhighest = 0, WDfirst, WDlast, WDavg = 0, WDcount = 0;
+		var SEhighest = 0, SEfirst, SElast, SEavg = 0, SEcount = 0;
+		for (let x = 0; x < data.length; x++)
+		{
+			if (data[x].jobTitle == "Database Analyst")
+			{
+				DAlist.push(data[x]);
+				DAavg += parseFloat(data[x].salary);
+				DAcount++;
+				if ((inLocal === false) && (data[x].salary > DAhighest))
+				{
+					DAhighest = parseFloat(data[x].salary).toPrecision(7);
+					DAfirst = data[x].name.first;
+					DAlast = data[x].name.last;
+					localStorage.setItem("DAfirst", DAfirst);
+					localStorage.setItem("DAlast", DAlast);
+					localStorage.setItem("DAsalary", DAhighest);
+				}
+			}
+			else if (data[x].jobTitle === "Web Developer")
+			{
+				WDlist.push(data[x]);
+				WDavg += parseFloat(data[x].salary);
+				WDcount++;
+				if ((inLocal === false) && (data[x].salary > WDhighest))
+				{
+					WDhighest = parseFloat(data[x].salary).toPrecision(7);
+					WDfirst = data[x].name.first;
+					WDlast = data[x].name.last;
+					localStorage.setItem("WDfirst", WDfirst);
+					localStorage.setItem("WDlast", WDlast);
+					localStorage.setItem("WDsalary", WDhighest);
+				}
+			}
+			else if (data[x].jobTitle === "Software Developer")
+			{
+				SElist.push(data[x]);
+				SEavg += parseFloat(data[x].salary);
+				SEcount++;
+				if ((inLocal === false) && (data[x].salary > SEhighest))
+				{
+					SEhighest = parseFloat(data[x].salary).toPrecision(7);
+					SEfirst = data[x].name.first;
+					SElast = data[x].name.last;
+					localStorage.setItem("SEfirst", SEfirst);
+					localStorage.setItem("SElast", SElast);
+					localStorage.setItem("SEsalary", SEhighest);
+				}
+			}
+		}
+		DAavg = (DAavg /= DAcount).toPrecision(7);
+		WDavg = (WDavg /= WDcount).toPrecision(7);
+		SEavg = (SEavg /= SEcount).toPrecision(7);
+		if (inLocal === false)
+		{
+			DAdivs[0].innerHTML = DAfirst;
+			DAdivs[1].innerHTML = DAlast;
+			DAdivs[2].innerHTML = DAhighest;			
+			WDdivs[0].innerHTML = WDfirst;
+			WDdivs[1].innerHTML = WDlast;
+			WDdivs[2].innerHTML = WDhighest;			
+			SEdivs[0].innerHTML = SEfirst;
+			SEdivs[1].innerHTML = SElast;
+			SEdivs[2].innerHTML = SEhighest;
+		}
+		DAdivs[3].innerHTML = DAavg;
+		WDdivs[3].innerHTML = WDavg;
+		SEdivs[3].innerHTML = SEavg;
+
+		if (DAhighest > WDhighest && DAhighest > SEhighest)
+		{
+			DAh3[2].style.color = "green";
+		}
+		else if (WDhighest > DAhighest && WDhighest > SEhighest)
+		{
+			WDh3[2].style.color = "green";
+		}
+		else
+		{
+			SEh3[2].style.color = "green";
+		}
+
+		if (DAavg > WDavg && DAavg > SEavg)
+		{
+			DAh3[3].style.color = "green";
+		}
+		else if (WDavg > DAhighest && WDavg > SEavg)
+		{
+			WDh3[3].style.color = "green";
+		}
+		else
+		{
+			SEh3[3].style.color = "green";
+		}
+		
+		var fSearch = document.querySelector("#first-name");
+		var lSearch = document.querySelector("#last-name");
+		var searchOut = document.querySelector("#search-area div");
+		var found = false;
+		document.querySelector("#search-submit").addEventListener("click", searchList);
+		function searchList(e)
+		{
+			for (let x = 0; x < data.length; x++)
+			{
+				if ((data[x].name.first === fSearch.value) && (data[x].name.last === lSearch.value))
+				{
+					found = true;
+					searchOut.innerHTML = data[x].name.first + " " + data[x].name.last + " " + data[x].jobTitle + " $" + data[x].salary;
+				}
+			}
+			if (found === false)
+			{
+				searchOut.innerHTML = "Name not found";
+			}
+		}
+
+		document.querySelector("#list-database-analyst").addEventListener("click", showList);
+		document.querySelector("#list-web-developer").addEventListener("click", showList);
+		document.querySelector("#list-software-engineer").addEventListener("click", showList);
+		var listOut = document.querySelector("#list-output div");
+		function showList(e)
+		{
+			listOut.innerHTML = "";
+			if (this.id === "list-database-analyst")
+			{
+				for (let x = 0; x < DAlist.length; x++)
+				{
+					listOut.innerHTML += DAlist[x].name.first + " " + DAlist[x].name.last + " - $" + parseFloat(DAlist[x].salary).toPrecision(7) + "<br>";
+				}
+			}
+			else if (this.id === "list-web-developer")
+			{
+				for (let x = 0; x < WDlist.length; x++)
+				{
+					listOut.innerHTML += WDlist[x].name.first + " " + WDlist[x].name.last + " - $" + parseFloat(WDlist[x].salary).toPrecision(7) + "<br>";
+				}
+			}
+			else
+			{
+				for (let x = 0; x < SElist.length; x++)
+				{
+					listOut.innerHTML += SElist[x].name.first + " " + SElist[x].name.last + " - $" + parseFloat(SElist[x].salary).toPrecision(7) + "<br>";
+				}
+			}
+		}
+
+		document.querySelector("#search-clear").addEventListener("click", clear);
+		document.querySelector("#list-clear").addEventListener("click", clear);
+		function clear(e)
+		{
+			if (this.id === "search-clear")
+			{
+				searchOut.innerHTML = "";
+			}
+			else
+			{
+				listOut.innerHTML = "";
+			}
+		}
+
+	});
+</script>
+
+</body>
+</html>
