@@ -69,33 +69,81 @@ states["on"] = function()
         if (balls[x].y+balls[x].r > canvas.height)
         {
             balls[x].vy = -balls[x].vy;
-			if (random.value === "random")
+			if (random.value === "red")
 			{
-				balls[x].color = "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + ",0,0)";
+			}
+			else if (random.value === "green")
+			{
+				balls[x].color = "rgb(0," + Math.floor(Math.random()*200+50) + ",0)";
+			}
+			else if (random.value === "blue")
+			{
+				balls[x].color = "rgb(0,0," + Math.floor(Math.random()*200+50) + ")";
+			}
+			else if (random.value === "random")
+			{
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
 			}
         }
         if (balls[x].y-balls[x].r < 0)
         {
             balls[x].vy = -balls[x].vy;
-			if (random.value === "random")
+			if (random.value === "red")
 			{
-				balls[x].color = "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + ",0,0)";
+			}
+			else if (random.value === "green")
+			{
+				balls[x].color = "rgb(0," + Math.floor(Math.random()*200+50) + ",0)";
+			}
+			else if (random.value === "blue")
+			{
+				balls[x].color = "rgb(0,0," + Math.floor(Math.random()*200+50) + ")";
+			}
+			else if (random.value === "random")
+			{
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
 			}
         }
         if (balls[x].x+balls[x].r > canvas.width)
         {
             balls[x].vx = -balls[x].vx;
-			if (random.value === "random")
+			if (random.value === "red")
 			{
-				balls[x].color = "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + ",0,0)";
+			}
+			else if (random.value === "green")
+			{
+				balls[x].color = "rgb(0," + Math.floor(Math.random()*200+50) + ",0)";
+			}
+			else if (random.value === "blue")
+			{
+				balls[x].color = "rgb(0,0," + Math.floor(Math.random()*200+50) + ")";
+			}
+			else if (random.value === "random")
+			{
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
 			}
         }
         if (balls[x].x-balls[x].r < 0)
         {
             balls[x].vx = -balls[x].vx;
-			if (random.value === "random")
+			if (random.value === "red")
 			{
-				balls[x].color = "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + ",0,0)";
+			}
+			else if (random.value === "green")
+			{
+				balls[x].color = "rgb(0," + Math.floor(Math.random()*200+50) + ",0)";
+			}
+			else if (random.value === "blue")
+			{
+				balls[x].color = "rgb(0,0," + Math.floor(Math.random()*200+50) + ")";
+			}
+			else if (random.value === "random")
+			{
+				balls[x].color = "rgb(" + Math.floor(Math.random()*200+50) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")";
 			}
         }
     } 
